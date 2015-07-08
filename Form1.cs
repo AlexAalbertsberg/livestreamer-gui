@@ -51,6 +51,26 @@ namespace LivestreamerGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string selectedStream = listBox1.SelectedItem.ToString();
+
+            foreach(JObject stream in streams)
+            {
+                if(stream["channel"]["name"].ToString().Equals(selectedStream))
+                {
+                    var streamURL = stream["channel"]["url"];
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                    startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    startInfo.FileName = @"D:\Applications\Livestreamer\livestreamer.exe";
+                    startInfo.Arguments = streamURL.ToString() + " source";
+                    process.StartInfo = startInfo;
+                    process.Start();
+
+                    //System.Diagnostics.Process.Start(@"D:\Applications\Livestreamer\livestreamer.exe", streamURL.ToString() + " source");
+
+                }
+            }
 
         }
     }
