@@ -11,6 +11,8 @@ namespace LivestreamerGUI
     {
         public static string BASE_URL = "https://api.twitch.tv/kraken/streams?game=League+of+Legends";
 
+        public JArray streams;
+
         public Form1()
         {
             InitializeComponent();
@@ -29,12 +31,12 @@ namespace LivestreamerGUI
 
                 var results = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(dataObjects);
 
-                var test = results.streams;
+                streams = results.streams;
 
-                foreach(var obj in test)
+                foreach(JObject stream in streams)
                 {
-                    var channel = obj.channel;
-                    string name = channel.name;
+                    var channel = stream["channel"];
+                    var name = channel["name"];
 
                     listBox1.Items.Add(name);
                 }
@@ -49,7 +51,7 @@ namespace LivestreamerGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // TODO run console command to start livestreamer
+
         }
     }
 }
